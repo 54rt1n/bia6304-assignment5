@@ -53,9 +53,11 @@ def chat(dqm: DocumentQueryModel, embedding_model, db_path, llm_provider, model_
 
 @cli.command()
 @click.argument('file_path', type=click.Path(exists=True))
+@click.option('--id-key', default='area_id', help='The key to use for our doc ID')
+@click.option('--content-key', default='summary', help='The key to use for our doc content')
 @click.pass_obj
-def load_area_data(dqm: DocumentQueryModel, file_path):
-    dqm.load_jsonl(file_path)
+def load_area_data(dqm: DocumentQueryModel, file_path, id_key, content_key):
+    dqm.load_jsonl(file_path, id_key=id_key, content_key=content_key)
     dqm.save()
     click.echo(f"Data loaded from {file_path}")
 
